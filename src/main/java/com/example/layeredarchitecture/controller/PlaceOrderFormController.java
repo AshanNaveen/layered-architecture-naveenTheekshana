@@ -1,6 +1,10 @@
 package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.dao.*;
+import com.example.layeredarchitecture.dao.impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.dao.impl.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.impl.OrderDAOImpl;
+import com.example.layeredarchitecture.dao.impl.OrderDetailDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -54,6 +58,7 @@ public class PlaceOrderFormController {
 
     private ItemDAO itemDAO=new ItemDAOImpl();
     private CustomerDAO customerDAO=new CustomerDAOImpl();
+    private Connection connection;
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -315,9 +320,8 @@ public class PlaceOrderFormController {
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-        Connection connection = null;
         try {
-
+            connection=DBConnection.getDbConnection().getConnection();
             boolean isOrderExists = orderDAO.getOrderDetail(orderId);
             /*if order id already exist*/
             if (isOrderExists) {
