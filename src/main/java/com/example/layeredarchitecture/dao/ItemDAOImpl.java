@@ -41,7 +41,12 @@ public class ItemDAOImpl {
         pstm.setString(4, dto.getCode());
         return pstm.executeUpdate()>0;
     }
-
+    public boolean existsItem(String code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        return pstm.executeQuery().next();
+    }
     public boolean deleteItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
