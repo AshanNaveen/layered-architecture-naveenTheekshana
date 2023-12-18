@@ -35,17 +35,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
     @Override
     public boolean exist(String code) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
-        pstm.setString(1, code);
-        return pstm.executeQuery().next();
+        ResultSet rst=CrudUtil.crudUtil("SELECT code FROM Item WHERE code=?");
+        return rst.next();
     }
     @Override
     public boolean delete(String code) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
-        pstm.setString(1, code);
-        return pstm.executeUpdate()>0;
+        return CrudUtil.crudUtil("DELETE FROM Item WHERE code=?");
     }
     @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
