@@ -366,7 +366,10 @@ public class PlaceOrderFormController {
 
             connection.commit();
             connection.setAutoCommit(true);
-
+            ResultSet rst = CrudUtil.crudUtil("SELECT code,description,date FROM item join company.orderdetails o on item.code = o.itemCode join company.orders o2 on o2.oid = o.oid where o.oid=?", orderId);
+            while (rst.next()) {
+                System.out.println(rst.getString(1) +" ~ " +rst.getString(2)+" ~ "+rst.getString(3));
+            }
             return true;
 
         } catch (SQLException throwables) {
