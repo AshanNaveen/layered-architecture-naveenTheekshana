@@ -1,15 +1,19 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.*;
-import com.example.layeredarchitecture.dao.impl.CustomerDAOImpl;
-import com.example.layeredarchitecture.dao.impl.ItemDAOImpl;
-import com.example.layeredarchitecture.dao.impl.OrderDAOImpl;
-import com.example.layeredarchitecture.dao.impl.OrderDetailDAOImpl;
+import com.example.layeredarchitecture.dao.custom.CustomerDAO;
+import com.example.layeredarchitecture.dao.custom.ItemDAO;
+import com.example.layeredarchitecture.dao.custom.OrderDAO;
+import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
+import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.OrderDAOImpl;
+import com.example.layeredarchitecture.dao.custom.impl.OrderDetailDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
+import com.example.layeredarchitecture.util.CrudUtil;
 import com.example.layeredarchitecture.view.tdm.OrderDetailTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -53,11 +57,11 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-    private OrderDAO orderDAO=new OrderDAOImpl();
-    private OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
+    private OrderDAO orderDAO = new OrderDAOImpl();
+    private OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
 
-    private ItemDAO itemDAO=new ItemDAOImpl();
-    private CustomerDAO customerDAO=new CustomerDAOImpl();
+    private ItemDAO itemDAO = new ItemDAOImpl();
+    private CustomerDAO customerDAO = new CustomerDAOImpl();
     private Connection connection;
 
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -301,7 +305,7 @@ public class PlaceOrderFormController {
 
     public void btnPlaceOrder_OnAction(ActionEvent actionEvent) {
         boolean b = saveOrder(orderId, LocalDate.now(), cmbCustomerId.getValue(),
-                tblOrderDetails.getItems().stream().map(tm -> new OrderDetailDTO(orderId,tm.getCode(), tm.getQty(), tm.getUnitPrice())).collect(Collectors.toList()));
+                tblOrderDetails.getItems().stream().map(tm -> new OrderDetailDTO(orderId, tm.getCode(), tm.getQty(), tm.getUnitPrice())).collect(Collectors.toList()));
 
         if (b) {
             new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
@@ -321,7 +325,7 @@ public class PlaceOrderFormController {
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
         try {
-            connection=DBConnection.getDbConnection().getConnection();
+            connection = DBConnection.getDbConnection().getConnection();
             boolean isOrderExists = orderDAO.exist(orderId);
             /*if order id already exist*/
             if (isOrderExists) {
@@ -362,6 +366,7 @@ public class PlaceOrderFormController {
 
             connection.commit();
             connection.setAutoCommit(true);
+
             return true;
 
         } catch (SQLException throwables) {

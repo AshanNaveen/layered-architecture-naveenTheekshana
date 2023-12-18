@@ -1,12 +1,9 @@
-package com.example.layeredarchitecture.dao.impl;
+package com.example.layeredarchitecture.dao.custom.impl;
 
-import com.example.layeredarchitecture.dao.OrderDetailDAO;
-import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
 import com.example.layeredarchitecture.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
