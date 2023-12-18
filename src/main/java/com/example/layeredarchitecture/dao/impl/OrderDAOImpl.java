@@ -23,7 +23,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean exist(String orderId) throws SQLException, ClassNotFoundException {
-        ResultSet rst=CrudUtil.crudUtil("SELECT oid FROM `Orders` WHERE oid=?");
+        ResultSet rst=CrudUtil.crudUtil("SELECT oid FROM `Orders` WHERE oid=?",orderId);
         return rst.next();
     }
 

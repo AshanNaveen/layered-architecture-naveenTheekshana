@@ -35,12 +35,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
     @Override
     public boolean exist(String code) throws SQLException, ClassNotFoundException {
-        ResultSet rst=CrudUtil.crudUtil("SELECT code FROM Item WHERE code=?");
+        ResultSet rst=CrudUtil.crudUtil("SELECT code FROM Item WHERE code=?",code);
         return rst.next();
     }
     @Override
     public boolean delete(String code) throws SQLException, ClassNotFoundException {
-        return CrudUtil.crudUtil("DELETE FROM Item WHERE code=?");
+        return CrudUtil.crudUtil("DELETE FROM Item WHERE code=?",code);
     }
     @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
