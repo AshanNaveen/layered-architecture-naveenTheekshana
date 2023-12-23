@@ -1,0 +1,51 @@
+package com.example.layeredarchitecture.bo;
+
+import com.example.layeredarchitecture.dao.custom.CustomerDAO;
+import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.model.CustomDTO;
+import com.example.layeredarchitecture.model.CustomerDTO;
+
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * @author nvn
+ * @created 12/23/2023 - 9:27 AM
+ */
+public class CustomerBOImpl implements CustomerBO{
+    CustomerDAO customerDAO=new CustomerDAOImpl();
+    @Override
+    public List<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
+        return customerDAO.getAll();
+    }
+
+    @Override
+    public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return customerDAO.save(dto);
+    }
+
+    @Override
+    public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return customerDAO.update(dto);
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(id);
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.exist(id);
+    }
+
+    @Override
+    public String generateNextId() throws SQLException, ClassNotFoundException {
+        return customerDAO.generateNextId();
+    }
+
+    @Override
+    public CustomerDTO getDetail(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.getDetail(id);
+    }
+}

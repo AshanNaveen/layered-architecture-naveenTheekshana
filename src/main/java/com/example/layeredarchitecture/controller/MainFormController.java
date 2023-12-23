@@ -67,7 +67,6 @@ public class MainFormController {
     private void playMouseEnterAnimation(MouseEvent event) {
         if (event.getSource() instanceof ImageView) {
             ImageView icon = (ImageView) event.getSource();
-//boiler plate codes
             switch (icon.getId()) {
                 case "imgCustomer":
                     lblMenu.setText("Manage Customers");
